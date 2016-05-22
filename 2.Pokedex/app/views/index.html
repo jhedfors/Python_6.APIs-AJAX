@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("img").click(function(e){
+              var id = $(this).attr('data-id');
+              $.get("http://pokeapi.co/api/v1/pokemon/"+id+"/", function(res) {
+                  var html_str = "";
+                  html_str += "<h3>"+res.name+"</h3>"
+                  html_str += "<img src= 'http://pokeapi.co/media/img/"+id+".png'>"
+                  html_str += "<h4>Types</h4>";
+                  html_str += "<ul>";
+                  for(var i = 0; i < res.types.length; i++) {
+                      html_str += "<li>" + res.types[i].name + "</li>";
+                  }
+                  html_str += "</ul>";
+                  html_str += "<h4>Height</h4>";
+                  html_str += "<p>" + res.height+ "</p>";
+                  html_str += "<h4>Wieght</h4>";
+                  html_str += "<p>" + res.weight+ "</p>";
+
+                  $("#pokedex").html(html_str);
+                  console.log(res);
+              }, "json");
+            })
+          })
+    </script>
+    <style media="screen">
+
+      #pokemons{
+        display: inline-block;
+        position: fixed;
+        width: 75%;
+        height: 100%;
+        overflow-y: scroll;
+
+      }
+      #pokedex{
+        display: inline-block;
+        position: fixed;
+        vertical-align: top;
+        width: 18%;
+        height: 90%;
+        margin: 5px;
+        border: 5px solid red;
+        padding: 10px;
+        overflow-y: scroll;
+        margin-left: 75%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="pokemons">
+        {% for i in range(1,151)%}
+        <img data-id = "{{i}}" src="http://pokeapi.co/media/img/{{i}}.png">
+        {% endfor%}
+      </div>
+      <div id="pokedex">
+      </div>
+
+    </div>
+
+
+
+  </body>
+</html>
