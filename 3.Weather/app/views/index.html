@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('form').submit(function() {
+          var city = $("input[name='city']").val();
+          $.get('http://api.openweathermap.org/data/2.5/weather?q='+city+'&units=Imperial&APPID=8a764c3fb3b956c5d0dd3e74c4217c60', function(res) {
+            var html_str = "";
+            html_str += "<h3>"+res.name+", "+res.sys.country+"</h3>"
+            html_str += "<p>Temperature:<b> "+res.main.temp+"</b><p>";
+
+            $("#forcast").html(html_str);
+              console.log(res);
+          }, 'json');
+          // don't forget t o return false so the page doesn't refresh
+          return false;
+      });
+  });    </script>
+    <style media="screen">
+
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="form">
+        <form class="">
+          <input type="text" name="city" value="">
+          <input type="submit" name="name" value="Search Weather">
+        </form>
+      </div>
+      <div id="forcast">
+      </div>
+    </div>
+  </body>
+</html>
