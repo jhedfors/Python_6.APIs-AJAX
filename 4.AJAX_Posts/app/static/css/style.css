@@ -12,3 +12,11 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+.post{
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  margin: 10px 10px 10px 0px;
+  border: 1px solid black;
+  padding: 20px;
+}

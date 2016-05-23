@@ -6,12 +6,45 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="{{ url_for('static', filename='js/jquery-2.2.4.min.js') }}"></script>
+
+    <script>
+      $(document).ready(function(){
+        $.get('/index_html', function(res) {
+          console.log(res);
+          $('#posts').html(res);
+        });
+        $('form').submit(function(){
+          $.post('/create', $(this).serialize(),function(res) {
+            $('#posts').html(res);
+            $('textarea').val('');
+            $('textarea').focus();
+          });
+        return false;
+        });
+    });
+    </script>
   </head>
   <body>
     <div class="wrapper">
-      <div class="row">
-        <div class="col s12">
-          <h1>Ready!</h1>
+      <nav class="" role="navigation">
+        <div class="nav-wrapper container">
+          <a id="logo-container" href="" class="brand-logo left">My Posts</a>
+        </div>
+      </nav>
+      <div class="row container">
+        <div class="col s12 section">
+          <div id="posts">
+          </div>
+        </div>
+      </div>
+      <div class="row container">
+        <div class="col s6">
+          <h5>Add a note:</h5>
+          <form id="create" action="/create" method="post">
+            <textarea name="post" rows="8" cols="40" autofocus=""></textarea>
+            <input class="btn" type="Submit" value="Post It!">
+          </form>
         </div>
       </div>
     </div>
